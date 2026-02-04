@@ -1,4 +1,3 @@
-# ProjectsUART Protocol Implementation on Xilinx ZedBoard
 
 UART Protocol Implementation on Xilinx ZedBoard
 
