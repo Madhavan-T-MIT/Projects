@@ -1,4 +1,4 @@
-#UART Protocol Implementation on Xilinx ZedBoard
+**UART Protocol Implementation on Xilinx ZedBoard**
 
 This repository contains the implementation of a UART (Universal Asynchronous Receiver Transmitter) transmitter and receiver using Verilog HDL with a fixed baud rate. The design is based on a clock-per-bit timing method to ensure accurate and reliable serial data communication.
 
