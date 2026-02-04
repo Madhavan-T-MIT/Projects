@@ -1,0 +1,84 @@
+//////////////////////////////////// ARITHMETIC AND LOGIC UNIT //////////////////////////////
+
+
+module alu #(parameter N=4)(
+    input [N-1:0]a,b,
+    input [3:0]operation,
+    input [1:0]shift,
+    output reg[N-1:0]result,
+    output reg carryout
+    
+    );
+    
+    reg [N:0]temp;
+    always @(*)begin
+        case (operation)
+            4'b0000 :begin 
+                temp     = ({1'b0,a}+{1'b0,b});
+                carryout = temp[N];
+                result   = temp[N-1:0];
+            end
+            4'b0001 :begin 
+                temp = ({1'b0,a}-{1'b0,b});
+                carryout = temp[N];
+                result   = temp[N-1:0];
+            end
+            4'b0010 : begin // LOGICAL AND
+                result = a&b;
+                carryout = 1'b0;
+            end
+            4'b0011 : begin result = a|b;carryout = 1'b0; end   //LOGICAL OR
+            4'b0100 : begin result = a^b;carryout = 1'b0; end   //LOGICAL XOR
+            4'b0101 : begin result = ~(a&b);carryout = 1'b0;end //NAND
+            4'b0110 : begin result = ~(a|b);carryout = 1'b0;end //NOR
+            4'b0111 : begin result = ~(a^b);carryout = 1'b0;end //XNOR
+            4'b1000 : begin result = a<<shift;carryout = 1'b0;end   //SHIFT LEFT
+            4'b1001 : begin result = b>>shift;carryout = 1'b0;end   //SHIFT RIGHT
+            //4'b1010 : begin result = a>>shift;carryout = 1'b0;end
+            4'b1010 : begin result = (a<<shift)|(a>>(N-shift));carryout = 1'b0;end  //ROTATE LEFT
+            4'b1011 : begin result = (b>>shift)|(b<<(N-shift));carryout = 1'b0;end  //ROTATE RIGHT
+            default :begin
+                result = 0;carryout=0;
+            end
+            
+        endcase
+            
+    end
+endmodule
+
+
+/////////////////////////////////////////// ALU TESTBENCH ////////////////////////////////////////////
+
+module alu_tb;
+    parameter N=4;
+    reg [N-1:0]a,b;
+    reg [3:0]s;
+    reg [1:0]shift;
+    wire [N-1:0]result;
+    wire carryout;
+    
+    alu #N uut(
+        .a(a),
+        .b(b),
+        .operation(s),
+        .shift(shift),
+        .result(result),
+        .carryout(carryout)
+        );
+        
+    initial begin
+        a = 4'hA;b=4'hF;s=4'h0;shift=0;#10;
+        s=4'h1;#10;
+        a = 4'hA;b=4'hA;s=4'h2;#10;
+        s=4'h3;#10;
+        s=4'h4;#10;
+        s=4'h5;#10;
+        s=4'h6;#10;
+        s=4'h7;#10;
+        s=4'h8;shift=2;#10;
+        s=4'h9;shift=2;#10;
+        s=4'hA;shift=2;#10;
+        s=4'hB;shift=2;#10;
+        $stop;
+    end
+endmodule
