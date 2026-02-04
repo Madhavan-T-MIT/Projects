@@ -6,7 +6,7 @@ The UART transmitter and receiver are designed using a Finite State Machine (FSM
 
 The design was synthesized, implemented, and tested on the Xilinx ZedBoard (Zynq-7000). Functional verification was carried out using a custom testbench, and simulation results were analyzed through DocLight waveform analysis, confirming correct operation of both transmission and reception.
 
-#Features
+**Features**
 
 UART transmitter and receiver with fixed baud rate
 
@@ -20,7 +20,7 @@ Hardware implementation on Xilinx ZedBoard
 
 Verified using testbench and DocLight
 
-#Tools & Technologies
+**Tools & Technologies**
 
 Verilog HDL
 
