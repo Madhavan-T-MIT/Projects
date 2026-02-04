@@ -310,8 +310,9 @@ module tb_uart;
             end
         end
 
-        //$display("ALL UART TESTS PASSED");
+
         $finish;
     end
 
 endmodule
+
